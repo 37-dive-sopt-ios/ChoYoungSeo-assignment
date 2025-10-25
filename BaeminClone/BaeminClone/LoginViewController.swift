@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-final class LoginViewController: BaseViewController {
+final class LoginViewController: BaseViewController, UITextFieldDelegate {
     
     // MARK: - Delegate
     
@@ -35,6 +35,13 @@ final class LoginViewController: BaseViewController {
         return textField
     }()
     
+    private lazy var idClearButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.setImage(UIImage(named: "ic_clear"), for: .normal)
+        button.tintColor = .baeminGray300
+        return button
+    }()
+    
     private let pwTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "비밀번호"
@@ -47,6 +54,20 @@ final class LoginViewController: BaseViewController {
         textField.isSecureTextEntry = true
         textField.setPadding(10)
         return textField
+    }()
+    
+    private lazy var pwClearButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.setImage(UIImage(named: "ic_clear"), for: .normal)
+        button.tintColor = .baeminGray300
+        return button
+    }()
+
+    private lazy var toggleSecureButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.setImage(UIImage(named: "ic_eye_slash"), for: .normal)
+        button.tintColor = .baeminGray300
+        return button
     }()
     
     private let loginButton = CTAButton()
@@ -95,6 +116,9 @@ final class LoginViewController: BaseViewController {
         
         idTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         pwTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
+        idClearButton.addTarget(self, action: #selector(clearIDTextField), for: .touchUpInside)
+        pwClearButton.addTarget(self, action: #selector(clearPWTextField), for: .touchUpInside)
+        toggleSecureButton.addTarget(self, action: #selector(toggleSecure), for: .touchUpInside)
         
         loginButton.configure(
             title: "로그인",
@@ -107,7 +131,16 @@ final class LoginViewController: BaseViewController {
         
         findAccountStackView.addArrangedSubviews(findAccountLabel, findAccountImageView)
         
-        view.addSubviews(navigationBar, idTextField, pwTextField, loginButton, findAccountStackView)
+        view.addSubviews(
+            navigationBar,
+            idTextField,
+            idClearButton,
+            pwTextField,
+            pwClearButton,
+            toggleSecureButton,
+            loginButton,
+            findAccountStackView
+        )
         
         navigationBar.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
@@ -122,11 +155,29 @@ final class LoginViewController: BaseViewController {
             $0.width.equalTo(343)
         }
         
+        idClearButton.snp.makeConstraints {
+            $0.centerY.equalTo(idTextField)
+            $0.trailing.equalTo(idTextField.snp.trailing).inset(20)
+            $0.size.equalTo(24)
+        }
+        
         pwTextField.snp.makeConstraints {
             $0.top.equalTo(idTextField.snp.bottom).offset(12)
             $0.centerX.equalToSuperview()
             $0.height.equalTo(46)
             $0.width.equalTo(343)
+        }
+        
+        pwClearButton.snp.makeConstraints {
+            $0.centerY.equalTo(pwTextField)
+            $0.trailing.equalTo(pwTextField.snp.trailing).inset(20)
+            $0.size.equalTo(24)
+        }
+
+        toggleSecureButton.snp.makeConstraints {
+            $0.centerY.equalTo(pwTextField)
+            $0.trailing.equalTo(pwClearButton.snp.leading).offset(-16)
+            $0.size.equalTo(20)
         }
         
         loginButton.snp.makeConstraints {
@@ -147,12 +198,29 @@ final class LoginViewController: BaseViewController {
     }
     
     // MARK: - Actions
-    
+
     @objc
     private func textFieldDidChange() {
         let isEnabled = !(idTextField.text?.isEmpty ?? true)
-                      && !(pwTextField.text?.isEmpty ?? true)
+                     && !(pwTextField.text?.isEmpty ?? true)
         loginButton.setEnabled(isEnabled)
+    }
+
+    @objc
+    private func clearIDTextField() {
+        idTextField.text = ""
+        textFieldDidChange()
+    }
+
+    @objc
+    private func clearPWTextField() {
+        pwTextField.text = ""
+        textFieldDidChange()
+    }
+
+    @objc
+    private func toggleSecure() {
+        pwTextField.isSecureTextEntry.toggle()
     }
     
     private func loginButtonTapped() {
@@ -169,7 +237,7 @@ final class LoginViewController: BaseViewController {
         welcomeVC.userID = idText
         navigationController?.pushViewController(welcomeVC, animated: true)
     }
-
+    
     // MARK: - Private Methods
 
     private func passwordAlert() {
