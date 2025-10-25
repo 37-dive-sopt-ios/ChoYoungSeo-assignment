@@ -9,7 +9,12 @@ import UIKit
 import SnapKit
 
 final class WelcomeViewController: BaseViewController {
-
+    
+    
+    // MARK: - Properties
+    
+    var userID: String?
+    
     // MARK: - UI Components
     
     private let navigationBar = NavigationBar(title: "로그인 완료")
@@ -32,7 +37,6 @@ final class WelcomeViewController: BaseViewController {
     
     private let subtitleLabel: UILabel = {
         let label = UILabel()
-        label.text = "반가워요!"
         label.font = .pretendard(.title_sb_18)
         label.textColor = .baeminBlack
         label.textAlignment = .center
@@ -45,15 +49,24 @@ final class WelcomeViewController: BaseViewController {
     // MARK: - Setup Methods
     
     override func setUI() {
+        
         navigationBar.backAction = { [weak self] in
             self?.navigationController?.popViewController(animated: true)
         }
         
         loginButton.configure(
-            title: "로그인하기",
+            title: "뒤로가기",
             style: .fixed,
-            tapAction: { [weak self] in self?.backToLoginButtonTapped() }
+            tapAction: { [weak self] in
+                self?.backToLoginButtonTapped()
+            }
         )
+        
+        if let userID = userID, !userID.isEmpty {
+            subtitleLabel.text = "\(userID)님 반가워요!"
+        } else {
+            subtitleLabel.text = "반가워요!"
+        }
     }
     
     override func setLayout() {
@@ -89,19 +102,9 @@ final class WelcomeViewController: BaseViewController {
         }
     }
     
-    // MARK: - Private Methods
+    // MARK: - Actions
     
     private func backToLoginButtonTapped() {
-        let loginVC = LoginViewController()
-        loginVC.delegate = self
-        navigationController?.pushViewController(loginVC, animated: true)
-    }
-}
-
-// MARK: - LoginViewDelegate
-
-extension WelcomeViewController: LoginViewController.LoginViewDelegate {
-    func loginViewController(_ controller: LoginViewController, didLoginWith userID: String) {
-        subtitleLabel.text = "\(userID)님 반가워요!"
+        navigationController?.popViewController(animated: true)
     }
 }

@@ -94,7 +94,9 @@ final class LoginViewController: BaseViewController {
     }
     
     override func setLayout() {
+        
         findAccountStackView.addArrangedSubviews(findAccountLabel, findAccountImageView)
+        
         view.addSubviews(navigationBar, idTextField, pwTextField, loginButton, findAccountStackView)
         
         navigationBar.snp.makeConstraints {
@@ -145,8 +147,10 @@ final class LoginViewController: BaseViewController {
     
     private func loginButtonTapped() {
         guard let idText = idTextField.text, !idText.isEmpty else { return }
-        delegate?.loginViewController(self, didLoginWith: idText)
-        navigationController?.popViewController(animated: true)
+
+        let welcomeVC = WelcomeViewController()
+        welcomeVC.userID = idText
+        navigationController?.pushViewController(welcomeVC, animated: true)
     }
 }
 
