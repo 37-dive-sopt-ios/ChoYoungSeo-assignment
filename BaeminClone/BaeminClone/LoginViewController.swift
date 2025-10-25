@@ -10,17 +10,27 @@ import SnapKit
 
 final class LoginViewController: BaseViewController {
     
+    // MARK: - Delegate
+    
+    weak var delegate: LoginViewDelegate?
+    
+    protocol LoginViewDelegate: AnyObject {
+        func loginViewController(_ controller: LoginViewController, didLoginWith userID: String)
+    }
+    
     // MARK: - UI Components
+    
+    private let navigationBar = NavigationBar(title: "이메일 또는 아이디로 계속")
     
     private let idTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "이메일 아이디"
-        textField.font = UIFont(name: "Pretendard-Regular", size: 17)
+        textField.font = .pretendard(.body_r_14)
         textField.backgroundColor = .white
         textField.borderStyle = .none
-        textField.layer.cornerRadius = 6
+        textField.layer.cornerRadius = 4
         textField.layer.borderWidth = 1
-        textField.layer.borderColor = UIColor.grey200.cgColor
+        textField.layer.borderColor = UIColor.baeminGray200.cgColor
         textField.setPadding(10)
         return textField
     }()
@@ -28,104 +38,118 @@ final class LoginViewController: BaseViewController {
     private let pwTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "비밀번호"
-        textField.font = UIFont(name: "Pretendard-Regular", size: 17)
+        textField.font = .pretendard(.body_r_14)
         textField.backgroundColor = .white
         textField.borderStyle = .none
-        textField.layer.cornerRadius = 6
+        textField.layer.cornerRadius = 4
         textField.layer.borderWidth = 1
-        textField.layer.borderColor = UIColor.grey200.cgColor
+        textField.layer.borderColor = UIColor.baeminGray200.cgColor
+        textField.isSecureTextEntry = true
         textField.setPadding(10)
         return textField
     }()
-
-    private let loginButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("로그인", for: .normal)
-        button.titleLabel?.font = UIFont(name: "Pretendard-Bold", size: 18)
-        button.backgroundColor = .grey300
-        button.layer.cornerRadius = 6
-        return button
-    }()
+    
+    private let loginButton = CTAButton()
     
     private let findAccountStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
-        stackView.spacing = 16
         stackView.alignment = .center
+        stackView.spacing = 4
         return stackView
     }()
-
+    
     private let findAccountLabel: UILabel = {
         let label = UILabel()
         label.text = "계정 찾기"
-        label.font = UIFont(name: "Pretendard-Regular", size: 15)
+        label.font = .pretendard(.body_r_14)
         label.textColor = .darkGray
         label.textAlignment = .center
         return label
     }()
-
+    
     private let findAccountImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "character_profile")
+        imageView.image = UIImage(named: "ic_chevron_right")
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
-
+    
     // MARK: - Setup Methods
     
     override func setUI() {
-        view.backgroundColor = .white
+        
+        navigationBar.backAction = { [weak self] in
+            self?.navigationController?.popViewController(animated: true)
+        }
         
         idTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         pwTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
+        
+        loginButton.configure(
+            title: "로그인",
+            style: .dynamic,
+            tapAction: { [weak self] in self?.loginButtonTapped() }
+        )
     }
     
     override func setLayout() {
         findAccountStackView.addArrangedSubviews(findAccountLabel, findAccountImageView)
-        view.addSubviews(idTextField, pwTextField, loginButton, findAccountStackView)
+        view.addSubviews(navigationBar, idTextField, pwTextField, loginButton, findAccountStackView)
+        
+        navigationBar.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide)
+            $0.horizontalEdges.equalToSuperview()
+            $0.height.equalTo(42)
+        }
         
         idTextField.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).offset(40)
+            $0.top.equalTo(navigationBar.snp.bottom).offset(24)
             $0.centerX.equalToSuperview()
-            $0.height.equalTo(52)
-            $0.width.equalTo(300)
-
+            $0.height.equalTo(46)
+            $0.width.equalTo(343)
         }
         
         pwTextField.snp.makeConstraints {
             $0.top.equalTo(idTextField.snp.bottom).offset(12)
             $0.centerX.equalToSuperview()
-            $0.height.equalTo(52)
-            $0.width.equalTo(300)
+            $0.height.equalTo(46)
+            $0.width.equalTo(343)
         }
         
         loginButton.snp.makeConstraints {
-            $0.top.equalTo(pwTextField.snp.bottom).offset(12)
+            $0.top.equalTo(pwTextField.snp.bottom).offset(20)
             $0.centerX.equalToSuperview()
-            $0.height.equalTo(52)
-            $0.width.equalTo(300)
+            $0.height.equalTo(46)
+            $0.width.equalTo(343)
         }
         
         findAccountStackView.snp.makeConstraints {
-            $0.top.equalTo(loginButton.snp.bottom).offset(12)
+            $0.top.equalTo(loginButton.snp.bottom).offset(32)
             $0.centerX.equalToSuperview()
         }
         
         findAccountImageView.snp.makeConstraints {
-            $0.size.equalTo(CGSize(width: 20, height: 20))
+            $0.size.equalTo(12)
         }
     }
     
     // MARK: - Actions
-
+    
     @objc
     private func textFieldDidChange() {
-        let isEnabled = !(idTextField.text?.isEmpty ?? true) && !(pwTextField.text?.isEmpty ?? true)
-        loginButton.isEnabled = isEnabled
-        loginButton.backgroundColor = isEnabled ? .black : .grey300
+        let isEnabled = !(idTextField.text?.isEmpty ?? true)
+                      && !(pwTextField.text?.isEmpty ?? true)
+        loginButton.setEnabled(isEnabled)
+    }
+    
+    private func loginButtonTapped() {
+        guard let idText = idTextField.text, !idText.isEmpty else { return }
+        delegate?.loginViewController(self, didLoginWith: idText)
+        navigationController?.popViewController(animated: true)
     }
 }
 
-#Preview {
-    LoginViewController()
-}
+//#Preview {
+//    LoginViewController()
+//}
