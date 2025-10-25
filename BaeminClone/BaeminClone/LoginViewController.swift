@@ -101,8 +101,11 @@ final class LoginViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        view.endEditing(true)
+        
         idTextField.text = ""
         pwTextField.text = ""
+        
         loginButton.setEnabled(false)
     }
     
