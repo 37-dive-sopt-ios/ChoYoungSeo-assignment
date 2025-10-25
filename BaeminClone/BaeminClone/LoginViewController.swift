@@ -157,10 +157,30 @@ final class LoginViewController: BaseViewController {
     
     private func loginButtonTapped() {
         guard let idText = idTextField.text, !idText.isEmpty else { return }
+        guard let pwText = pwTextField.text, !pwText.isEmpty else { return }
+
+        // 비밀번호 정규식 검사
+        guard pwText.isValidPassword else {
+            passwordAlert()
+            return
+        }
 
         let welcomeVC = WelcomeViewController()
         welcomeVC.userID = idText
         navigationController?.pushViewController(welcomeVC, animated: true)
+    }
+
+    // MARK: - Private Methods
+
+    private func passwordAlert() {
+        let alert = UIAlertController(
+            title: nil,
+            message: "비밀번호는 8~20자이며, 영문, 숫자, 특수문자를 모두 포함해야 합니다.",
+            preferredStyle: .alert
+        )
+        let okAction = UIAlertAction(title: "확인", style: .default)
+        alert.addAction(okAction)
+        present(alert, animated: true)
     }
 }
 
