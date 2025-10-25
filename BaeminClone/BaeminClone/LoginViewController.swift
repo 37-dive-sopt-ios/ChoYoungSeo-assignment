@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-final class LoginViewController: BaseViewController, UITextFieldDelegate {
+final class LoginViewController: BaseViewController {
     
     // MARK: - Delegate
     
@@ -114,8 +114,16 @@ final class LoginViewController: BaseViewController, UITextFieldDelegate {
             self?.navigationController?.popViewController(animated: true)
         }
         
+        idTextField.delegate = self
+        pwTextField.delegate = self
+
+        idClearButton.isHidden = true
+        pwClearButton.isHidden = true
+        toggleSecureButton.isHidden = true
+        
         idTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         pwTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
+        
         idClearButton.addTarget(self, action: #selector(clearIDTextField), for: .touchUpInside)
         pwClearButton.addTarget(self, action: #selector(clearPWTextField), for: .touchUpInside)
         toggleSecureButton.addTarget(self, action: #selector(toggleSecure), for: .touchUpInside)
@@ -252,6 +260,37 @@ final class LoginViewController: BaseViewController, UITextFieldDelegate {
     }
 }
 
-//#Preview {
-//    LoginViewController()
-//}
+// MARK: - Extension
+
+extension LoginViewController: UITextFieldDelegate {
+
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        if textField == idTextField {
+            idTextField.placeholder = "이메일 또는 아이디를 입력해주세요"
+            idTextField.layer.borderWidth = 2
+            idTextField.layer.borderColor = UIColor.baeminBlack.cgColor
+            
+            idClearButton.isHidden = false
+            pwClearButton.isHidden = true
+            toggleSecureButton.isHidden = true
+
+        } else if textField == pwTextField {
+            pwTextField.placeholder = "비밀번호를 입력해주세요"
+            pwTextField.layer.borderWidth = 2
+            pwTextField.layer.borderColor = UIColor.baeminBlack.cgColor
+            
+            idClearButton.isHidden = true
+            pwClearButton.isHidden = false
+            toggleSecureButton.isHidden = false
+        }
+    }
+
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        textField.layer.borderWidth = 1
+        textField.layer.borderColor = UIColor.baeminGray200.cgColor
+
+        idClearButton.isHidden = true
+        pwClearButton.isHidden = true
+        toggleSecureButton.isHidden = true
+    }
+}
