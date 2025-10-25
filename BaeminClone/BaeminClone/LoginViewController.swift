@@ -24,7 +24,7 @@ final class LoginViewController: BaseViewController {
     
     private let idTextField: UITextField = {
         let textField = UITextField()
-        textField.placeholder = "이메일 아이디"
+        textField.setPlaceholder("이메일 아이디", color: .baeminGray700, font: .pretendard(.body_r_14))
         textField.font = .pretendard(.body_r_14)
         textField.backgroundColor = .white
         textField.borderStyle = .none
@@ -44,7 +44,7 @@ final class LoginViewController: BaseViewController {
     
     private let pwTextField: UITextField = {
         let textField = UITextField()
-        textField.placeholder = "비밀번호"
+        textField.setPlaceholder("비밀번호", color: .baeminGray700, font: .pretendard(.body_r_14))
         textField.font = .pretendard(.body_r_14)
         textField.backgroundColor = .white
         textField.borderStyle = .none
@@ -165,7 +165,7 @@ final class LoginViewController: BaseViewController {
         
         idClearButton.snp.makeConstraints {
             $0.centerY.equalTo(idTextField)
-            $0.trailing.equalTo(idTextField.snp.trailing).inset(20)
+            $0.trailing.equalTo(idTextField.snp.trailing).inset(15)
             $0.size.equalTo(24)
         }
         
@@ -178,13 +178,13 @@ final class LoginViewController: BaseViewController {
         
         pwClearButton.snp.makeConstraints {
             $0.centerY.equalTo(pwTextField)
-            $0.trailing.equalTo(pwTextField.snp.trailing).inset(20)
+            $0.trailing.equalTo(pwTextField.snp.trailing).inset(15)
             $0.size.equalTo(24)
         }
 
         toggleSecureButton.snp.makeConstraints {
             $0.centerY.equalTo(pwTextField)
-            $0.trailing.equalTo(pwClearButton.snp.leading).offset(-16)
+            $0.trailing.equalTo(pwClearButton.snp.leading).offset(-12)
             $0.size.equalTo(20)
         }
         
@@ -266,7 +266,8 @@ extension LoginViewController: UITextFieldDelegate {
 
     func textFieldDidBeginEditing(_ textField: UITextField) {
         if textField == idTextField {
-            idTextField.placeholder = "이메일 또는 아이디를 입력해주세요"
+            idTextField.setPlaceholder("이메일 또는 아이디를 입력해주세요", color: .baeminGray700, font: .pretendard(.body_r_14))
+
             idTextField.layer.borderWidth = 2
             idTextField.layer.borderColor = UIColor.baeminBlack.cgColor
             
@@ -275,7 +276,8 @@ extension LoginViewController: UITextFieldDelegate {
             toggleSecureButton.isHidden = true
 
         } else if textField == pwTextField {
-            pwTextField.placeholder = "비밀번호를 입력해주세요"
+            pwTextField.setPlaceholder("비밀번호를 입력해주세요", color: .baeminGray700, font: .pretendard(.body_r_14))
+
             pwTextField.layer.borderWidth = 2
             pwTextField.layer.borderColor = UIColor.baeminBlack.cgColor
             
@@ -286,6 +288,10 @@ extension LoginViewController: UITextFieldDelegate {
     }
 
     func textFieldDidEndEditing(_ textField: UITextField) {
+        
+        idTextField.setPlaceholder("이메일 아이디", color: .baeminGray700, font: .pretendard(.body_r_14))
+        pwTextField.setPlaceholder("비밀번호", color: .baeminGray700, font: .pretendard(.body_r_14))
+
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor.baeminGray200.cgColor
 
