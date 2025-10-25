@@ -235,6 +235,8 @@ final class LoginViewController: BaseViewController {
     }
     
     private func loginButtonTapped() {
+        view.endEditing(true)
+
         guard let idText = idTextField.text, !idText.isEmpty else { return }
         guard let pwText = pwTextField.text, !pwText.isEmpty else { return }
 
