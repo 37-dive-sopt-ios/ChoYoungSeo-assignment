@@ -63,7 +63,7 @@ final class LoginViewController: BaseViewController {
         let label = UILabel()
         label.text = "계정 찾기"
         label.font = .pretendard(.body_r_14)
-        label.textColor = .darkGray
+        label.textColor = .baeminBlack
         label.textAlignment = .center
         return label
     }()
@@ -74,6 +74,16 @@ final class LoginViewController: BaseViewController {
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
+    
+    // MARK: - Lifecycle
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        idTextField.text = ""
+        pwTextField.text = ""
+        loginButton.setEnabled(false)
+    }
     
     // MARK: - Setup Methods
     
