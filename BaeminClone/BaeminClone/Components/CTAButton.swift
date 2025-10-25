@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import Then
 
 final class CTAButton: UIView {
     
@@ -24,15 +25,13 @@ final class CTAButton: UIView {
     
     // MARK: - UI Components
     
-    private let button: UIButton = {
-        let button = UIButton(type: .system)
-        button.titleLabel?.font = .pretendard(.head_b_18)
-        button.setTitleColor(.white, for: .normal)
-        button.layer.cornerRadius = 4
-        button.clipsToBounds = true
-        button.backgroundColor = .baeminGray200
-        return button
-    }()
+    private let button = UIButton(type: .system).then {
+        $0.titleLabel?.font = .pretendard(.head_b_18)
+        $0.setTitleColor(.white, for: .normal)
+        $0.layer.cornerRadius = 4
+        $0.clipsToBounds = true
+        $0.backgroundColor = .baeminGray200
+    }
     
     // MARK: - Init
     

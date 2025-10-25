@@ -15,22 +15,18 @@ final class NavigationBar: UIView {
     var backAction: (() -> Void)?
     
     // MARK: - UI Components
-    
-    private let backButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setImage(UIImage(named: "ic_arrow_left"), for: .normal)
-        button.tintColor = .black
-        return button
-    }()
-    
-    private let titleLabel: UILabel = {
-        let label = UILabel()
-        label.font = .pretendard(.title_sb_18)
-        label.textColor = .black
-        label.textAlignment = .center
-        return label
-    }()
-    
+
+    private let backButton = UIButton(type: .system).then {
+        $0.setImage(UIImage(named: "ic_arrow_left"), for: .normal)
+        $0.tintColor = .black
+    }
+
+    private let titleLabel = UILabel().then {
+        $0.font = .pretendard(.title_sb_18)
+        $0.textColor = .black
+        $0.textAlignment = .center
+    }
+
     // MARK: - Init
     
     init(title: String) {

@@ -7,43 +7,37 @@
 
 import UIKit
 import SnapKit
+import Then
 
 final class WelcomeViewController: BaseViewController {
-    
     
     // MARK: - Properties
     
     var userID: String?
     
     // MARK: - UI Components
-    
+
     private let navigationBar = NavigationBar(title: "로그인 완료")
-    
-    private let welcomeImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(named: "img_welcome")
-        imageView.contentMode = .scaleAspectFit
-        return imageView
-    }()
-    
-    private let titleLabel: UILabel = {
-        let label = UILabel()
-        label.text = "환영합니다"
-        label.font = .pretendard(.head_b_24)
-        label.textColor = .baeminBlack
-        label.textAlignment = .center
-        return label
-    }()
-    
-    private let subtitleLabel: UILabel = {
-        let label = UILabel()
-        label.font = .pretendard(.title_sb_18)
-        label.textColor = .baeminBlack
-        label.textAlignment = .center
-        label.numberOfLines = 0
-        return label
-    }()
-    
+
+    private let welcomeImageView = UIImageView().then {
+        $0.image = UIImage(named: "img_welcome")
+        $0.contentMode = .scaleAspectFit
+    }
+
+    private let titleLabel = UILabel().then {
+        $0.text = "환영합니다"
+        $0.font = .pretendard(.head_b_24)
+        $0.textColor = .baeminBlack
+        $0.textAlignment = .center
+    }
+
+    private let subtitleLabel = UILabel().then {
+        $0.font = .pretendard(.title_sb_18)
+        $0.textColor = .baeminBlack
+        $0.textAlignment = .center
+        $0.numberOfLines = 0
+    }
+
     private let loginButton = CTAButton()
     
     // MARK: - Setup Methods

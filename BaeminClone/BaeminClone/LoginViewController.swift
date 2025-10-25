@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import Then
 
 final class LoginViewController: BaseViewController {
     
@@ -19,82 +20,66 @@ final class LoginViewController: BaseViewController {
     }
     
     // MARK: - UI Components
-    
-    private let navigationBar = NavigationBar(title: "이메일 또는 아이디로 계속")
-    
-    private let idTextField: UITextField = {
-        let textField = UITextField()
-        textField.setPlaceholder("이메일 아이디", color: .baeminGray700, font: .pretendard(.body_r_14))
-        textField.font = .pretendard(.body_r_14)
-        textField.backgroundColor = .white
-        textField.borderStyle = .none
-        textField.layer.cornerRadius = 4
-        textField.layer.borderWidth = 1
-        textField.layer.borderColor = UIColor.baeminGray200.cgColor
-        textField.setPadding(10)
-        return textField
-    }()
-    
-    private lazy var idClearButton: UIButton = {
-        let button = UIButton(type: .custom)
-        button.setImage(UIImage(named: "ic_clear"), for: .normal)
-        button.tintColor = .baeminGray300
-        return button
-    }()
-    
-    private let pwTextField: UITextField = {
-        let textField = UITextField()
-        textField.setPlaceholder("비밀번호", color: .baeminGray700, font: .pretendard(.body_r_14))
-        textField.font = .pretendard(.body_r_14)
-        textField.backgroundColor = .white
-        textField.borderStyle = .none
-        textField.layer.cornerRadius = 4
-        textField.layer.borderWidth = 1
-        textField.layer.borderColor = UIColor.baeminGray200.cgColor
-        textField.isSecureTextEntry = true
-        textField.setPadding(10)
-        return textField
-    }()
-    
-    private lazy var pwClearButton: UIButton = {
-        let button = UIButton(type: .custom)
-        button.setImage(UIImage(named: "ic_clear"), for: .normal)
-        button.tintColor = .baeminGray300
-        return button
-    }()
 
-    private lazy var toggleSecureButton: UIButton = {
-        let button = UIButton(type: .custom)
-        button.setImage(UIImage(named: "ic_eye_slash"), for: .normal)
-        button.tintColor = .baeminGray300
-        return button
-    }()
-    
+    private let navigationBar = NavigationBar(title: "이메일 또는 아이디로 계속")
+
+    private let idTextField = UITextField().then {
+        $0.setPlaceholder("이메일 아이디", color: .baeminGray700, font: .pretendard(.body_r_14))
+        $0.font = .pretendard(.body_r_14)
+        $0.backgroundColor = .white
+        $0.borderStyle = .none
+        $0.layer.cornerRadius = 4
+        $0.layer.borderWidth = 1
+        $0.layer.borderColor = UIColor.baeminGray200.cgColor
+        $0.setPadding(10)
+    }
+
+    private lazy var idClearButton = UIButton(type: .custom).then {
+        $0.setImage(UIImage(named: "ic_clear"), for: .normal)
+        $0.tintColor = .baeminGray300
+    }
+
+    private let pwTextField = UITextField().then {
+        $0.setPlaceholder("비밀번호", color: .baeminGray700, font: .pretendard(.body_r_14))
+        $0.font = .pretendard(.body_r_14)
+        $0.backgroundColor = .white
+        $0.borderStyle = .none
+        $0.layer.cornerRadius = 4
+        $0.layer.borderWidth = 1
+        $0.layer.borderColor = UIColor.baeminGray200.cgColor
+        $0.isSecureTextEntry = true
+        $0.setPadding(10)
+    }
+
+    private lazy var pwClearButton = UIButton(type: .custom).then {
+        $0.setImage(UIImage(named: "ic_clear"), for: .normal)
+        $0.tintColor = .baeminGray300
+    }
+
+    private lazy var toggleSecureButton = UIButton(type: .custom).then {
+        $0.setImage(UIImage(named: "ic_eye_slash"), for: .normal)
+        $0.tintColor = .baeminGray300
+    }
+
     private let loginButton = CTAButton()
-    
-    private let findAccountStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .horizontal
-        stackView.alignment = .center
-        stackView.spacing = 4
-        return stackView
-    }()
-    
-    private let findAccountLabel: UILabel = {
-        let label = UILabel()
-        label.text = "계정 찾기"
-        label.font = .pretendard(.body_r_14)
-        label.textColor = .baeminBlack
-        label.textAlignment = .center
-        return label
-    }()
-    
-    private let findAccountImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(named: "ic_chevron_right")
-        imageView.contentMode = .scaleAspectFit
-        return imageView
-    }()
+
+    private let findAccountStackView = UIStackView().then {
+        $0.axis = .horizontal
+        $0.alignment = .center
+        $0.spacing = 4
+    }
+
+    private let findAccountLabel = UILabel().then {
+        $0.text = "계정 찾기"
+        $0.font = .pretendard(.body_r_14)
+        $0.textColor = .baeminBlack
+        $0.textAlignment = .center
+    }
+
+    private let findAccountImageView = UIImageView().then {
+        $0.image = UIImage(named: "ic_chevron_right")
+        $0.contentMode = .scaleAspectFit
+    }
     
     // MARK: - Lifecycle
     
