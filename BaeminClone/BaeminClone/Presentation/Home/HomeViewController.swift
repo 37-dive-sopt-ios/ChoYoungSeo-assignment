@@ -6,6 +6,23 @@
 //
 
 import UIKit
+import SnapKit
 
 final class HomeViewController: BaseViewController {
+    
+    // MARK: - Properties
+    
+    private let homeView = HomeView()
+    
+    // MARK: - Setup Methods
+    
+    override func setUI() {
+        view.addSubview(homeView)
+    }
+    
+    override func setLayout() {
+        homeView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+    }
 }
