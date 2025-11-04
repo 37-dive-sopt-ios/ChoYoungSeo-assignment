@@ -13,10 +13,6 @@ final class LoginViewController: BaseViewController {
     
     private let loginView = LoginView()
     
-    override func loadView() {
-        view = loginView
-    }
-
     // MARK: - Lifecycle
     
     override func viewWillAppear(_ animated: Bool) {
@@ -29,6 +25,8 @@ final class LoginViewController: BaseViewController {
     // MARK: - Setup Methods
     
     override func setUI() {
+        view.addSubview(loginView)
+        
         loginView.navigationBar.backAction = { [weak self] in
             self?.navigationController?.popViewController(animated: true)
         }
@@ -48,6 +46,12 @@ final class LoginViewController: BaseViewController {
             style: .dynamic,
             tapAction: { [weak self] in self?.loginButtonTapped() }
         )
+    }
+    
+    override func setLayout() {
+        loginView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
     }
     
     // MARK: - Actions

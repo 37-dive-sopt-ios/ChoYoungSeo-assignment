@@ -14,13 +14,11 @@ final class WelcomeViewController: BaseViewController {
     var userID: String?
     private let welcomeView = WelcomeView()
     
-    override func loadView() {
-        view = welcomeView
-    }
-    
     // MARK: - Setup Methods
     
     override func setUI() {
+        view.addSubview(welcomeView)
+        
         welcomeView.navigationBar.backAction = { [weak self] in
             self?.navigationController?.popViewController(animated: true)
         }
@@ -37,6 +35,12 @@ final class WelcomeViewController: BaseViewController {
             welcomeView.subtitleLabel.text = "\(userID)님 반가워요!"
         } else {
             welcomeView.subtitleLabel.text = "반가워요!"
+        }
+    }
+    
+    override func setLayout() {
+        welcomeView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
         }
     }
     
