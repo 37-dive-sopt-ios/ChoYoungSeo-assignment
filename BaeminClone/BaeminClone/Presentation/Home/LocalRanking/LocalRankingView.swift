@@ -38,23 +38,23 @@ final class LocalRankingView: BaseUIView {
         $0.textAlignment = .center
     }
     
-    private let chevronImageView = UIImageView().then {
-        $0.image = UIImage(named: "ic_chevron_right")
+    private let infoImageView = UIImageView().then {
+        $0.image = UIImage(named: "ic_info")?.withRenderingMode(.alwaysTemplate)
         $0.tintColor = .baeminWhite
         $0.contentMode = .scaleAspectFit
     }
     
     private let allItemsArrowLabelView = ArrowLabelView().then {
-        $0.configure(text: "전체보기")
+        $0.configure(text: "전체보기", textColor: .white)
     }
-
+    
     // MARK: - Setup Methods
     
     override func setUI() {
         backgroundColor = .white
         layer.insertSublayer(gradientLayer, at: 0)
 
-        titleStackView.addArrangedSubviews(titleLabel, chevronImageView)
+        titleStackView.addArrangedSubviews(titleLabel, infoImageView)
     }
     
     override func setLayout() {
@@ -69,6 +69,10 @@ final class LocalRankingView: BaseUIView {
         allItemsArrowLabelView.snp.makeConstraints {
             $0.centerY.equalTo(titleStackView)
             $0.trailing.equalToSuperview().inset(16)
+        }
+        
+        infoImageView.snp.makeConstraints {
+            $0.size.equalTo(16)
         }
     }
     

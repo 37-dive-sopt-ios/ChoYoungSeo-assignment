@@ -27,7 +27,8 @@ final class ArrowLabelView: UIView {
     }
     
     private let iconImageView = UIImageView().then {
-        $0.image = UIImage(named: "ic_chevron_right")
+        $0.image = UIImage(named: "ic_chevron_right")?.withRenderingMode(.alwaysTemplate)
+        $0.tintColor = .baeminBlack
         $0.contentMode = .scaleAspectFit
     }
     
@@ -62,12 +63,16 @@ final class ArrowLabelView: UIView {
     
     // MARK: - Public Methods
     
-    func configure(text: String, boldText: String? = nil) {
+    func configure(
+        text: String,
+        boldText: String? = nil,
+        textColor: UIColor = .baeminBlack
+    ) {
         let attributed = NSMutableAttributedString(
             string: text,
             attributes: [
                 .font: UIFont.pretendard(.body_r_14),
-                .foregroundColor: UIColor.baeminBlack
+                .foregroundColor: textColor
             ]
         )
         
@@ -79,5 +84,6 @@ final class ArrowLabelView: UIView {
         }
         
         label.attributedText = attributed
+        iconImageView.tintColor = textColor
     }
 }

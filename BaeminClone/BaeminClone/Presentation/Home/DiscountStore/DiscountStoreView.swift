@@ -26,14 +26,14 @@ final class DiscountStoreView: BaseUIView {
         $0.textAlignment = .center
     }
     
-    private let chevronImageView = UIImageView().then {
-        $0.image = UIImage(named: "ic_chevron_right")
+    private let infoImageView = UIImageView().then {
+        $0.image = UIImage(named: "ic_info")
         $0.contentMode = .scaleAspectFit
     }
     
     private let subTitleLabel = UILabel().then {
         $0.text = "2천원 이상 또는 15% 이상 할인중"
-        $0.font = .pretendard(.title_sb_18)
+        $0.font = .pretendard(.body_r_14)
         $0.textColor = .baeminGray300
         $0.textAlignment = .center
     }
@@ -59,7 +59,7 @@ final class DiscountStoreView: BaseUIView {
     
     override func setUI() {
         backgroundColor = .white
-        titleStackView.addArrangedSubviews(titleLabel, chevronImageView)
+        titleStackView.addArrangedSubviews(titleLabel, infoImageView)
     }
     
     override func setLayout() {
@@ -96,6 +96,10 @@ final class DiscountStoreView: BaseUIView {
         
         discountStoreArrowLabelView.snp.makeConstraints {
             $0.center.equalToSuperview()
+        }
+        
+        infoImageView.snp.makeConstraints {
+            $0.size.equalTo(16)
         }
     }
 }
