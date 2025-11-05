@@ -71,23 +71,10 @@ final class HomeView: BaseUIView {
         $0.spacing = 12
     }
     
-    let searchTextField = UITextField().then {
-        $0.setPlaceholder("찾아라! 맛있는 음식과 맛집", color: .baeminGray300, font: .pretendard(.body_r_14))
-        $0.font = .pretendard(.body_r_14)
-        $0.backgroundColor = .white
-        $0.borderStyle = .none
-        $0.layer.cornerRadius = 20
-        $0.layer.borderWidth = 1
-        $0.layer.borderColor = UIColor.baeminBlack.cgColor
-        $0.leftPadding(17)
-        $0.rightPadding(45)
+    private let searchTextField = SearchTextField().then {
+        $0.configure(placeholder: "우리 동네 맛집 검색")
     }
-    
-    private let searchButton = UIButton(type: .custom).then {
-        $0.setImage(UIImage(named: "ic_search")?.withRenderingMode(.alwaysTemplate), for: .normal)
-        $0.tintColor = .baeminGray700
-    }
-    
+
     private let bMartLogoImageView = UIImageView().then {
         $0.image = UIImage(named: "img_b_mart")
         $0.contentMode = .scaleAspectFit
@@ -116,7 +103,6 @@ final class HomeView: BaseUIView {
         $0.layer.shadowRadius = 4
     }
 
-    
     private let menuView = MenuView()
     private let martView = MartView()
     private let bannerView = BannerView()
@@ -159,9 +145,8 @@ final class HomeView: BaseUIView {
         contentView.addSubviews(
             locationStackView,
             topButtonStackView,
-            searchTextField,
-            searchButton,
             gradientContainerView,
+            searchTextField,
             menuView,
             martView,
             bannerView,
@@ -198,12 +183,6 @@ final class HomeView: BaseUIView {
             $0.top.equalTo(locationStackView.snp.bottom).offset(10)
             $0.horizontalEdges.equalToSuperview().inset(16)
             $0.height.equalTo(40)
-        }
-        
-        searchButton.snp.makeConstraints {
-            $0.centerY.equalTo(searchTextField)
-            $0.leading.equalTo(searchTextField.snp.trailing).offset(-33)
-            $0.size.equalTo(24)
         }
         
         gradientContainerView.snp.makeConstraints {
