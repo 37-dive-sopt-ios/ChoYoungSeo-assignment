@@ -23,7 +23,8 @@ final class LoginView: BaseUIView {
         $0.layer.cornerRadius = 4
         $0.layer.borderWidth = 1
         $0.layer.borderColor = UIColor.baeminGray200.cgColor
-        $0.setPadding(10)
+        $0.leftPadding(10)
+        $0.rightPadding(10)
     }
     
     let idClearButton = UIButton(type: .custom).then {
@@ -41,7 +42,8 @@ final class LoginView: BaseUIView {
         $0.layer.borderWidth = 1
         $0.layer.borderColor = UIColor.baeminGray200.cgColor
         $0.isSecureTextEntry = true
-        $0.setPadding(10)
+        $0.leftPadding(10)
+        $0.rightPadding(10)
     }
     
     let pwClearButton = UIButton(type: .custom).then {
