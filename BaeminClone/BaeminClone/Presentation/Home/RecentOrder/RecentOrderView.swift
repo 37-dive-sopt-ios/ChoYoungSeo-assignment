@@ -26,8 +26,8 @@ final class RecentOrderView: BaseUIView {
         $0.textAlignment = .center
     }
     
-    private let chevronImageView = UIImageView().then {
-        $0.image = UIImage(named: "ic_chevron_right")
+    private let infoImageView = UIImageView().then {
+        $0.image = UIImage(named: "ic_info")
         $0.contentMode = .scaleAspectFit
     }
     
@@ -39,7 +39,7 @@ final class RecentOrderView: BaseUIView {
     
     override func setUI() {
         backgroundColor = .white
-        titleStackView.addArrangedSubviews(titleLabel, chevronImageView)
+        titleStackView.addArrangedSubviews(titleLabel, infoImageView)
     }
     
     override func setLayout() {
@@ -54,6 +54,10 @@ final class RecentOrderView: BaseUIView {
         allItemsArrowLabelView.snp.makeConstraints {
             $0.centerY.equalTo(titleStackView)
             $0.trailing.equalToSuperview().inset(16)
+        }
+        
+        infoImageView.snp.makeConstraints {
+            $0.size.equalTo(16)
         }
     }
 }
