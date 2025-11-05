@@ -12,6 +12,7 @@ extension UIFont {
         case head_b_24
         case head_b_18
         case head_b_16
+        case head_b_14
         case title_sb_18
         case body_r_14
         case caption_r_10
@@ -25,6 +26,8 @@ extension UIFont {
             return UIFont(name: "Pretendard-Bold", size: 18) ?? .systemFont(ofSize: 18, weight: .bold)
         case .head_b_16:
             return UIFont(name: "Pretendard-Bold", size: 16) ?? .systemFont(ofSize: 16, weight: .bold)
+        case .head_b_14:
+            return UIFont(name: "Pretendard-Bold", size: 14) ?? .systemFont(ofSize: 14, weight: .bold)
         case .title_sb_18:
             return UIFont(name: "Pretendard-SemiBold", size: 18) ?? .systemFont(ofSize: 18, weight: .semibold)
         case .body_r_14:
