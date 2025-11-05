@@ -16,6 +16,7 @@ final class ArrowLabelView: UIView {
     private let stackView = UIStackView().then {
         $0.axis = .horizontal
         $0.alignment = .center
+        $0.distribution = .fill
         $0.spacing = 4
     }
     
