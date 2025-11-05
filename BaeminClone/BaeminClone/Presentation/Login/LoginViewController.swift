@@ -42,11 +42,9 @@ final class LoginViewController: BaseViewController {
         loginView.pwClearButton.addTarget(self, action: #selector(clearPWTextField), for: .touchUpInside)
         loginView.toggleSecureButton.addTarget(self, action: #selector(toggleSecure), for: .touchUpInside)
         
-        loginView.loginButton.configure(
-            title: "로그인",
-            style: .dynamic,
-            tapAction: { [weak self] in self?.loginButtonTapped() }
-        )
+        loginView.onLoginTapped = { [weak self] in
+            self?.loginButtonTapped()
+        }
     }
     
     override func setLayout() {

@@ -10,7 +10,7 @@ import SnapKit
 import Then
 
 final class LoginView: BaseUIView {
-    
+        
     // MARK: - UI Components
 
     let navigationBar = NavigationBar(title: "이메일 또는 아이디로 계속")
@@ -60,28 +60,24 @@ final class LoginView: BaseUIView {
     
     let loginButton = CTAButton()
     
-    private let findAccountStackView = UIStackView().then {
-        $0.axis = .horizontal
-        $0.alignment = .center
-        $0.spacing = 4
-    }
+    private let findAccountArrowLabelView = ArrowLabelView()
     
-    private let findAccountLabel = UILabel().then {
-        $0.text = "계정 찾기"
-        $0.font = .pretendard(.body_r_14)
-        $0.textColor = .baeminBlack
-        $0.textAlignment = .center
-    }
+    // MARK: - Callbacks
     
-    private let findAccountImageView = UIImageView().then {
-        $0.image = UIImage(named: "ic_chevron_right")
-        $0.contentMode = .scaleAspectFit
-    }
+    var onLoginTapped: (() -> Void)?
     
     // MARK: - Setup Methods
     
     override func setUI() {
-        findAccountStackView.addArrangedSubviews(findAccountLabel, findAccountImageView)
+        loginButton.configure(
+            title: "로그인",
+            style: .dynamic,
+            tapAction: { [weak self] in
+                self?.onLoginTapped?()
+            }
+        )
+        
+        findAccountArrowLabelView.configure(text: "계정 찾기")
     }
     
     override func setLayout() {
@@ -93,7 +89,7 @@ final class LoginView: BaseUIView {
             pwClearButton,
             toggleSecureButton,
             loginButton,
-            findAccountStackView
+            findAccountArrowLabelView
         )
         
         navigationBar.snp.makeConstraints {
@@ -141,13 +137,9 @@ final class LoginView: BaseUIView {
             $0.width.equalTo(343)
         }
         
-        findAccountStackView.snp.makeConstraints {
+        findAccountArrowLabelView.snp.makeConstraints {
             $0.top.equalTo(loginButton.snp.bottom).offset(32)
             $0.centerX.equalToSuperview()
-        }
-        
-        findAccountImageView.snp.makeConstraints {
-            $0.size.equalTo(12)
         }
     }
 }
