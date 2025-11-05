@@ -109,8 +109,13 @@ final class HomeView: BaseUIView {
         $0.backgroundColor = .white
         $0.layer.cornerRadius = 10
         $0.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        $0.layer.masksToBounds = true
+        $0.layer.masksToBounds = false
+        $0.layer.shadowColor = UIColor.baeminMint500.cgColor
+        $0.layer.shadowOpacity = 0.25
+        $0.layer.shadowOffset = CGSize(width: 0, height: -4)
+        $0.layer.shadowRadius = 4
     }
+
     
     private let menuView = MenuView()
     private let martView = MartView()
