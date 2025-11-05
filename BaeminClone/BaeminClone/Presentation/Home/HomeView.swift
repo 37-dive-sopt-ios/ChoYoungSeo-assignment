@@ -13,18 +13,28 @@ final class HomeView: BaseUIView {
     
     // MARK: - UI Components
     
+    private let scrollView = UIScrollView().then {
+        $0.showsVerticalScrollIndicator = false
+        $0.alwaysBounceVertical = true
+    }
+    
+    private let contentView = UIView()
+    
+    private let gradientContainerView = UIView()
+    
     private let gradientLayer: CAGradientLayer = {
         let layer = CAGradientLayer()
         layer.colors = [
             UIColor.baeminMint100.cgColor,
+            UIColor.baeminMint100.cgColor,
             UIColor.baeminMint100.withAlphaComponent(0.0).cgColor
         ]
-        layer.locations = [0.0, 0.4, 1.0]
+        layer.locations = [0.0, 0.25, 1.0]
         layer.startPoint = CGPoint(x: 0.5, y: 1.0)
         layer.endPoint = CGPoint(x: 0.5, y: 0.0)
         return layer
     }()
-
+    
     private let locationLabel = UILabel().then {
         $0.text = "우리집"
         $0.font = .pretendard(.head_b_16)
@@ -46,15 +56,15 @@ final class HomeView: BaseUIView {
     private let discountButton = UIButton(type: .custom).then {
         $0.setImage(UIImage(named: "ic_baemin_discount"), for: .normal)
     }
-
+    
     private let alarmButton = UIButton(type: .custom).then {
         $0.setImage(UIImage(named: "ic_alarm"), for: .normal)
     }
-
+    
     private let cartButton = UIButton(type: .custom).then {
         $0.setImage(UIImage(named: "ic_cart"), for: .normal)
     }
-
+    
     private let topButtonStackView = UIStackView().then {
         $0.axis = .horizontal
         $0.alignment = .center
@@ -74,7 +84,7 @@ final class HomeView: BaseUIView {
     }
     
     private let searchButton = UIButton(type: .custom).then {
-        $0.setImage(UIImage(named: "ic_search"), for: .normal)
+        $0.setImage(UIImage(named: "ic_search")?.withRenderingMode(.alwaysTemplate), for: .normal)
         $0.tintColor = .baeminGray700
     }
     
@@ -82,14 +92,14 @@ final class HomeView: BaseUIView {
         $0.image = UIImage(named: "img_b_mart")
         $0.contentMode = .scaleAspectFit
     }
-
+    
     private let promoLabel = UILabel().then {
         $0.text = "전상품 쿠폰팩 + 60%특가"
         $0.font = .pretendard(.head_b_16)
         $0.textColor = .baeminBlack
         $0.textAlignment = .center
     }
-
+    
     private let chevronImageView = UIImageView().then {
         $0.image = UIImage(named: "ic_chevron_right")
         $0.contentMode = .scaleAspectFit
@@ -104,6 +114,7 @@ final class HomeView: BaseUIView {
     
     private let menuView = MenuView()
     private let martView = MartView()
+    private let bannerView = BannerView()
     private let localRankingView = LocalRankingView()
     private let recentOrderView = RecentOrderView()
     private let discountStoreView = DiscountStoreView()
@@ -115,53 +126,67 @@ final class HomeView: BaseUIView {
     private let foodDeliveryArrowLabelView = ArrowLabelView().then {
         $0.configure(text: "음식배달에서 더보기", boldText: "음식배달")
     }
-        
+    
+    
     // MARK: - Setup Methods
     
     override func setUI() {
         backgroundColor = .baeminBackgroundWhite
         
-        layer.insertSublayer(gradientLayer, at: 0)
+        gradientContainerView.layer.insertSublayer(gradientLayer, at: 0)
         
         locationStackView.addArrangedSubviews(locationLabel, locationToggleImageView)
         topButtonStackView.addArrangedSubviews(discountButton, alarmButton, cartButton)
     }
     
     override func setLayout() {
-        
+        addSubview(scrollView)
+        scrollView.addSubview(contentView)
         foodDeliveryArrowContainerView.addSubview(foodDeliveryArrowLabelView)
         
-        addSubviews(
+        gradientContainerView.addSubviews(
+            bMartLogoImageView,
+            promoLabel,
+            chevronImageView,
+            topRoundedContainerView
+        )
+        
+        contentView.addSubviews(
             locationStackView,
             topButtonStackView,
             searchTextField,
             searchButton,
-            bMartLogoImageView,
-            promoLabel,
-            chevronImageView,
-            topRoundedContainerView,
+            gradientContainerView,
             menuView,
             martView,
+            bannerView,
             localRankingView,
             recentOrderView,
             discountStoreView,
-            foodDeliveryArrowContainerView,
-            
+            foodDeliveryArrowContainerView
         )
-
+        
+        scrollView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+        
+        contentView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+            $0.width.equalTo(scrollView.snp.width)
+        }
+        
         locationStackView.snp.makeConstraints {
-            $0.top.equalTo(safeAreaLayoutGuide).offset(9)
+            $0.top.equalTo(contentView.safeAreaLayoutGuide).offset(9)
             $0.leading.equalToSuperview().inset(16)
         }
         
         topButtonStackView.snp.makeConstraints {
-            $0.top.equalTo(safeAreaLayoutGuide).offset(9)
+            $0.top.equalTo(contentView.safeAreaLayoutGuide).offset(9)
             $0.trailing.equalToSuperview().inset(16)
         }
         
         locationToggleImageView.snp.makeConstraints {
-            $0.height.equalTo(5)
-            $0.width.equalTo(8)
+            $0.size.equalTo(CGSize(width: 8, height: 5))
         }
         
         searchTextField.snp.makeConstraints {
@@ -176,8 +201,13 @@ final class HomeView: BaseUIView {
             $0.size.equalTo(24)
         }
         
-        bMartLogoImageView.snp.makeConstraints {
+        gradientContainerView.snp.makeConstraints {
             $0.top.equalTo(searchTextField.snp.bottom).offset(24)
+            $0.horizontalEdges.equalToSuperview()
+        }
+        
+        bMartLogoImageView.snp.makeConstraints {
+            $0.top.equalToSuperview()
             $0.leading.equalToSuperview().inset(16)
             $0.size.equalTo(CGSize(width: 50, height: 16))
         }
@@ -197,10 +227,11 @@ final class HomeView: BaseUIView {
             $0.top.equalTo(promoLabel.snp.bottom).offset(27)
             $0.horizontalEdges.equalToSuperview()
             $0.height.equalTo(16)
+            $0.bottom.equalToSuperview()
         }
         
         menuView.snp.makeConstraints {
-            $0.top.equalTo(topRoundedContainerView.snp.bottom)
+            $0.top.equalTo(gradientContainerView.snp.bottom)
             $0.horizontalEdges.equalToSuperview()
             $0.height.equalTo(201)
         }
@@ -221,8 +252,14 @@ final class HomeView: BaseUIView {
             $0.height.equalTo(96)
         }
         
-        localRankingView.snp.makeConstraints {
+        bannerView.snp.makeConstraints {
             $0.top.equalTo(martView.snp.bottom).offset(10)
+            $0.horizontalEdges.equalToSuperview()
+            $0.height.equalTo(114)
+        }
+        
+        localRankingView.snp.makeConstraints {
+            $0.top.equalTo(bannerView.snp.bottom).offset(10)
             $0.horizontalEdges.equalToSuperview()
             $0.height.equalTo(323)
         }
@@ -237,6 +274,7 @@ final class HomeView: BaseUIView {
             $0.top.equalTo(recentOrderView.snp.bottom).offset(10)
             $0.horizontalEdges.equalToSuperview()
             $0.height.equalTo(384)
+            $0.bottom.equalToSuperview()
         }
         
         [discountButton, alarmButton, cartButton].forEach {
@@ -246,11 +284,7 @@ final class HomeView: BaseUIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        gradientLayer.frame = CGRect(
-            x: 0,
-            y: 0,
-            width: bounds.width,
-            height: topRoundedContainerView.frame.maxY
-        )
+        layoutIfNeeded()
+        gradientLayer.frame = gradientContainerView.bounds
     }
 }

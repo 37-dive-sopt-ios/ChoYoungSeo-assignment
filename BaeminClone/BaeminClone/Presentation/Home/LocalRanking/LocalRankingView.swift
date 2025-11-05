@@ -17,11 +17,12 @@ final class LocalRankingView: BaseUIView {
         let layer = CAGradientLayer()
         layer.colors = [
             UIColor.baeminBluePurple500.cgColor,
+            UIColor.baeminBluePurple500.cgColor,
             UIColor.baeminBluePurple500.withAlphaComponent(0.0).cgColor
         ]
-        layer.locations = [0.0, 0.3, 1.0]
+        layer.locations = [0.0, 0.5, 1.0]
         layer.startPoint = CGPoint(x: 0.5, y: 0.0)
-        layer.endPoint = CGPoint(x: 0.5, y: 1.0)
+        layer.endPoint = CGPoint(x: 0.5, y: 0.4)
         return layer
     }()
 
