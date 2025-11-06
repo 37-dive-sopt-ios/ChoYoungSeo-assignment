@@ -15,7 +15,7 @@ final class HomeCategoryCell: BaseUICollectionViewCell {
     
     private let categoryImageView = UIImageView().then {
         $0.backgroundColor = .baeminBackgroundWhite
-        $0.layer.cornerRadius = 10
+        $0.layer.cornerRadius = 20
         $0.layer.masksToBounds = true
     }
     
