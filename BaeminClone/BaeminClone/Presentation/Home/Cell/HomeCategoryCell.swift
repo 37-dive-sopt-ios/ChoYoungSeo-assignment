@@ -17,6 +17,7 @@ final class HomeCategoryCell: BaseUICollectionViewCell {
         $0.backgroundColor = .baeminBackgroundWhite
         $0.layer.cornerRadius = 20
         $0.layer.masksToBounds = true
+        $0.contentMode = .scaleAspectFill
     }
     
     private let categoryLabel = UILabel().then {
@@ -32,20 +33,23 @@ final class HomeCategoryCell: BaseUICollectionViewCell {
 
         categoryImageView.snp.makeConstraints {
             $0.size.equalTo(54)
+            $0.top.equalToSuperview()
             $0.centerX.equalToSuperview()
         }
 
         categoryLabel.snp.makeConstraints {
             $0.top.equalTo(categoryImageView.snp.bottom).offset(6)
             $0.centerX.equalTo(categoryImageView)
+            $0.bottom.equalToSuperview()
         }
     }
 }
 
-// MARK: - Extension
+// MARK: - Configure
 
 extension HomeCategoryCell {
-    func configure(title: String) {
+    func configure(title: String, image: UIImage?) {
         categoryLabel.text = title
+        categoryImageView.image = image
     }
 }

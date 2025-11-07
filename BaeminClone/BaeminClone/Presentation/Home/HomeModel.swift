@@ -5,7 +5,7 @@
 //  Created by 조영서 on 11/6/25.
 //
 
-import Foundation
+import UIKit
 
 enum HomeSection {
     case category([HomeCategoryModel])
@@ -36,23 +36,27 @@ extension HomeSection {
 
 struct HomeCategoryModel {
     let title: String
+    let image: UIImage?
 }
 
 struct HomeMartModel {
     let title: String
+    let image: UIImage?
 }
 
 struct HomeOrderInfoModel {
+    let image: UIImage?
     let storeName: String
     let rating: Double
-    let reviewCount: Int
+    let reviewCount: Int?
     let menuName: String
     let discountRate: Int
     let price: Int
-    let originalPrice: Int   
+    let originalPrice: Int
 }
 
 struct HomeStoreInfoModel {
+    let image: UIImage?
     let storeName: String
     let rating: Double
     let reviewCount: Int
@@ -60,6 +64,7 @@ struct HomeStoreInfoModel {
 }
 
 struct HomeDiscountStoreModel {
+    let image: UIImage?
     let storeName: String
     let rating: Double
     let reviewCount: Int

@@ -136,15 +136,21 @@ final class HomeOrderInfoCell: BaseUICollectionViewCell {
     }
 }
 
-// MARK: - Extension
+// MARK: - Configure
 
 extension HomeOrderInfoCell {
     func configure(_ model: HomeOrderInfoModel) {
+        orderInfoImageView.image = model.image
         storeNameLabel.text = model.storeName
         ratingLabel.text = String(format: "%.1f", model.rating)
-        reviewCountLabel.text = "(\(model.reviewCount))"
-        menuNameLabel.text = model.menuName
         
+        if let count = model.reviewCount {
+            reviewCountLabel.text = "(\(count))"
+        } else {
+            reviewCountLabel.text = nil
+        }
+        
+        menuNameLabel.text = model.menuName
         discountRateLabel.text = "\(model.discountRate)%"
         priceLabel.text = formatPrice(model.price)
         

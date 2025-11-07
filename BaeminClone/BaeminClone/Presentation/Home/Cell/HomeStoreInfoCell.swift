@@ -253,6 +253,7 @@ final class HomeStoreInfoCell: BaseUICollectionViewCell {
 
 extension HomeStoreInfoCell {
     func configure(_ model: HomeStoreInfoModel, type: StoreInfoType) {
+        orderInfoImageView.image = model.image
         storeNameLabel.text = model.storeName
         ratingLabel.text = String(format: "%.1f", model.rating)
         reviewCountLabel.text = "(\(formatNumber(model.reviewCount)))"
