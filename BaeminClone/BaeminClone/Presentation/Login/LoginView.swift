@@ -76,7 +76,6 @@ final class LoginView: BaseUIView {
                 self?.onLoginTapped?()
             }
         )
-        
         findAccountArrowLabelView.configure(text: "계정 찾기")
     }
     

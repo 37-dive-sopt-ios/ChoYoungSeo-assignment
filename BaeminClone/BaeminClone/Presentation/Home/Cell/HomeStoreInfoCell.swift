@@ -14,7 +14,7 @@ enum StoreInfoType {
     case discountStore
 }
 
-final class HomeStoreInfoCell: BaseUICollectionViewCell {
+final class HomeStoreInfoCell: BaseUICollectionViewCell, ReuseIdentifiable {
     
     // MARK: - UI Components
     

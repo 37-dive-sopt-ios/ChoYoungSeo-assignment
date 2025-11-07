@@ -103,8 +103,8 @@ final class HomeView: BaseUIView {
         $0.layer.shadowRadius = 4
     }
 
-    private let menuView = MenuView()
-    private let martView = MartView()
+    private let categoryView = CategoryView()
+    let martView = MartView()
     private let bannerView = BannerView()
     private let localRankingView = LocalRankingView()
     private let recentOrderView = RecentOrderView()
@@ -117,7 +117,6 @@ final class HomeView: BaseUIView {
     private let foodDeliveryArrowLabelView = ArrowLabelView().then {
         $0.configure(text: "음식배달에서 더보기", boldText: "음식배달")
     }
-    
     
     // MARK: - Setup Methods
     
@@ -147,7 +146,7 @@ final class HomeView: BaseUIView {
             topButtonStackView,
             gradientContainerView,
             searchTextField,
-            menuView,
+            categoryView,
             martView,
             bannerView,
             localRankingView,
@@ -214,14 +213,14 @@ final class HomeView: BaseUIView {
             $0.bottom.equalToSuperview()
         }
         
-        menuView.snp.makeConstraints {
+        categoryView.snp.makeConstraints {
             $0.top.equalTo(gradientContainerView.snp.bottom)
             $0.horizontalEdges.equalToSuperview()
             $0.height.equalTo(201)
         }
         
         foodDeliveryArrowContainerView.snp.makeConstraints {
-            $0.top.equalTo(menuView.snp.bottom).offset(1)
+            $0.top.equalTo(categoryView.snp.bottom).offset(1)
             $0.horizontalEdges.equalToSuperview()
             $0.height.equalTo(34)
         }

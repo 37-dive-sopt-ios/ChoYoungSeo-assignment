@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 import Then
 
-final class HomeCategoryCell: BaseUICollectionViewCell {
+final class HomeCategoryCell: BaseUICollectionViewCell, ReuseIdentifiable {
     
     // MARK: - UI Components
     
