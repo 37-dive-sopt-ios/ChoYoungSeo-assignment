@@ -9,6 +9,11 @@ import UIKit
 import SnapKit
 import Then
 
+enum StoreInfoType {
+    case recentOrder
+    case discountStore
+}
+
 final class HomeStoreInfoCell: BaseUICollectionViewCell {
     
     // MARK: - UI Components
@@ -247,10 +252,23 @@ final class HomeStoreInfoCell: BaseUICollectionViewCell {
 // MARK: - Configure
 
 extension HomeStoreInfoCell {
-    func configure(_ model: HomeStoreInfoModel) {
+    func configure(_ model: HomeStoreInfoModel, type: StoreInfoType) {
         storeNameLabel.text = model.storeName
         ratingLabel.text = String(format: "%.1f", model.rating)
-        reviewCountLabel.text = "(\(model.reviewCount))"
+        reviewCountLabel.text = "(\(formatNumber(model.reviewCount)))"
         deliveryTimeLabel.text = model.deliveryTime
+
+        switch type {
+        case .recentOrder:
+            recentOrderStackView.isHidden = false
+        case .discountStore:
+            recentOrderStackView.isHidden = true
+        }
+    }
+
+    private func formatNumber(_ value: Int) -> String {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        return formatter.string(from: NSNumber(value: value)) ?? "\(value)"
     }
 }

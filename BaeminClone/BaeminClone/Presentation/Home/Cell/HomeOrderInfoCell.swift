@@ -144,15 +144,22 @@ extension HomeOrderInfoCell {
         ratingLabel.text = String(format: "%.1f", model.rating)
         reviewCountLabel.text = "(\(model.reviewCount))"
         menuNameLabel.text = model.menuName
-        discountRateLabel.text = model.discountRate
-        priceLabel.text = model.price
+        
+        discountRateLabel.text = "\(model.discountRate)%"
+        priceLabel.text = formatPrice(model.price)
         
         originalPriceLabel.attributedText = NSAttributedString(
-            string: model.originalPrice,
+            string: formatPrice(model.originalPrice),
             attributes: [
                 .strikethroughStyle: NSUnderlineStyle.single.rawValue,
                 .strikethroughColor: UIColor.baeminGray600
             ]
         )
+    }
+    
+    private func formatPrice(_ value: Int) -> String {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        return "\(formatter.string(from: NSNumber(value: value)) ?? "\(value)")원"
     }
 }
