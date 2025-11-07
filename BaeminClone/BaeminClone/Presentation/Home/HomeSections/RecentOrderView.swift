@@ -35,6 +35,19 @@ final class RecentOrderView: BaseUIView {
         $0.configure(text: "전체보기")
     }
     
+    let collectionView = UICollectionView(
+        frame: .zero,
+        collectionViewLayout: UICollectionViewFlowLayout()
+    ).then {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.itemSize = CGSize(width: 188, height: 216)
+        $0.collectionViewLayout = layout
+        $0.showsHorizontalScrollIndicator = false
+        $0.backgroundColor = .clear
+        $0.contentInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+    }
+    
     // MARK: - Setup Methods
     
     override func setUI() {
@@ -44,7 +57,7 @@ final class RecentOrderView: BaseUIView {
     
     override func setLayout() {
         
-        addSubviews(titleStackView, allItemsArrowLabelView)
+        addSubviews(titleStackView, allItemsArrowLabelView, collectionView)
         
         titleStackView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(24)
@@ -58,6 +71,12 @@ final class RecentOrderView: BaseUIView {
         
         infoImageView.snp.makeConstraints {
             $0.size.equalTo(16)
+        }
+        
+        collectionView.snp.makeConstraints {
+            $0.top.equalTo(titleStackView.snp.bottom).offset(18)
+            $0.horizontalEdges.equalToSuperview()
+            $0.bottom.equalToSuperview().inset(20)
         }
     }
 }

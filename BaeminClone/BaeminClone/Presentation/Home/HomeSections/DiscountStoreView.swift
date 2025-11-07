@@ -55,6 +55,19 @@ final class DiscountStoreView: BaseUIView {
         $0.configure(text: "할인하는 가게 더보기", boldText: "할인하는 가게")
     }
     
+    let collectionView = UICollectionView(
+        frame: .zero,
+        collectionViewLayout: UICollectionViewFlowLayout()
+    ).then {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.itemSize = CGSize(width: 188, height: 216)
+        $0.collectionViewLayout = layout
+        $0.showsHorizontalScrollIndicator = false
+        $0.backgroundColor = .clear
+        $0.contentInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+    }
+    
     // MARK: - Setup Methods
     
     override func setUI() {
@@ -69,7 +82,8 @@ final class DiscountStoreView: BaseUIView {
             titleStackView,
             subTitleLabel,
             discountImageView,
-            discountStoreContainerView
+            discountStoreContainerView,
+            collectionView
         )
         
         titleStackView.snp.makeConstraints {
@@ -88,10 +102,16 @@ final class DiscountStoreView: BaseUIView {
             $0.size.equalTo(CGSize(width: 59, height: 66))
         }
         
+        collectionView.snp.makeConstraints {
+            $0.top.equalTo(subTitleLabel.snp.bottom).offset(18)
+            $0.horizontalEdges.equalToSuperview()
+            $0.height.equalTo(216)
+        }
         discountStoreContainerView.snp.makeConstraints {
-            $0.top.equalTo(discountImageView.snp.bottom).offset(20)
+            $0.top.equalTo(collectionView.snp.bottom).offset(20)
             $0.centerX.equalToSuperview()
             $0.size.equalTo(CGSize(width: 152, height: 34))
+            $0.bottom.equalToSuperview().inset(24)
         }
         
         discountStoreArrowLabelView.snp.makeConstraints {

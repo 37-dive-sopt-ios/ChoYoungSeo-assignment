@@ -103,12 +103,12 @@ final class HomeView: BaseUIView {
         $0.layer.shadowRadius = 4
     }
 
-    private let categoryView = CategoryView()
+    let categoryView = CategoryView()
     let martView = MartView()
-    private let bannerView = BannerView()
-    private let localRankingView = LocalRankingView()
-    private let recentOrderView = RecentOrderView()
-    private let discountStoreView = DiscountStoreView()
+    let bannerView = BannerView()
+    let localRankingView = LocalRankingView()
+    let recentOrderView = RecentOrderView()
+    let discountStoreView = DiscountStoreView()
     
     private let foodDeliveryArrowContainerView = UIView().then {
         $0.backgroundColor = .white
@@ -244,13 +244,13 @@ final class HomeView: BaseUIView {
         localRankingView.snp.makeConstraints {
             $0.top.equalTo(bannerView.snp.bottom).offset(10)
             $0.horizontalEdges.equalToSuperview()
-            $0.height.equalTo(323)
+            $0.height.equalTo(340)
         }
         
         recentOrderView.snp.makeConstraints {
             $0.top.equalTo(localRankingView.snp.bottom).offset(10)
             $0.horizontalEdges.equalToSuperview()
-            $0.height.equalTo(292)
+            $0.height.equalTo(315)
         }
         
         discountStoreView.snp.makeConstraints {

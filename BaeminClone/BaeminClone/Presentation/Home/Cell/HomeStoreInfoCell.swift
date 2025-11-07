@@ -196,6 +196,7 @@ final class HomeStoreInfoCell: BaseUICollectionViewCell, ReuseIdentifiable {
     
     override func setLayout() {
         orderInfoImageView.snp.makeConstraints {
+            $0.top.leading.equalToSuperview()
             $0.size.equalTo(CGSize(width: 188, height: 126))
         }
         
@@ -261,15 +262,40 @@ extension HomeStoreInfoCell {
 
         switch type {
         case .recentOrder:
-            recentOrderStackView.isHidden = false
+            recentOrderStackView.snp.makeConstraints {
+                $0.size.equalTo(0)
+            }
         case .discountStore:
-            recentOrderStackView.isHidden = true
+            recentOrderStackView.snp.makeConstraints {
+                $0.size.equalTo(0)
+            }
         }
     }
+    
+    func configure(_ model: HomeDiscountStoreModel, type: StoreInfoType) {
+        orderInfoImageView.image = model.image
+        storeNameLabel.text = model.storeName
+        ratingLabel.text = String(format: "%.1f", model.rating)
+        reviewCountLabel.text = "(\(formatNumber(model.reviewCount)))"
+        deliveryTimeLabel.text = model.deliveryTime
 
+        switch type {
+        case .recentOrder:
+            recentOrderStackView.snp.makeConstraints {
+                $0.size.equalTo(0)
+            }
+        case .discountStore:
+            recentOrderStackView.snp.makeConstraints {
+                $0.size.equalTo(0)
+            }
+        }
+    }
+    
     private func formatNumber(_ value: Int) -> String {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         return formatter.string(from: NSNumber(value: value)) ?? "\(value)"
     }
 }
+
+

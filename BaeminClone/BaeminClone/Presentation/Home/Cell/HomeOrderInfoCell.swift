@@ -123,6 +123,7 @@ final class HomeOrderInfoCell: BaseUICollectionViewCell, ReuseIdentifiable {
     
     override func setLayout() {
         orderInfoImageView.snp.makeConstraints {
+            $0.top.leading.equalToSuperview()
             $0.size.equalTo(145)
         }
         
