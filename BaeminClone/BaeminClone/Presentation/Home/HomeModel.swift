@@ -11,7 +11,7 @@ enum HomeSection {
     case category([HomeCategoryModel])
     case mart([HomeMartModel])
     case orderInfo([HomeOrderInfoModel])
-    case storeInfo([HomeStoreInfoModel])
+    case storeInfo([HomeRecentOrderModel])
     case discountStore([HomeDiscountStoreModel])
 }
 
@@ -55,7 +55,7 @@ struct HomeOrderInfoModel {
     let originalPrice: Int
 }
 
-struct HomeStoreInfoModel {
+struct HomeRecentOrderModel {
     let image: UIImage?
     let storeName: String
     let rating: Double

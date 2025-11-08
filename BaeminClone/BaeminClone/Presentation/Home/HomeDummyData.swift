@@ -107,44 +107,44 @@ extension HomeOrderInfoModel {
 
 // MARK: - StoreInfo
 
-extension HomeStoreInfoModel {
-    static let sampleData: [HomeStoreInfoModel] = [
-        HomeStoreInfoModel(
+extension HomeRecentOrderModel {
+    static let sampleData: [HomeRecentOrderModel] = [
+        HomeRecentOrderModel(
             image: UIImage(named: "img_hongkongbanjum"),
             storeName: "홍콩반점",
             rating: 4.8,
             reviewCount: 120,
             deliveryTime: "25~35분"
         ),
-        HomeStoreInfoModel(
+        HomeRecentOrderModel(
             image: UIImage(named: "img_jaws"),
             storeName: "죠스떡볶이",
             rating: 4.7,
             reviewCount: 321,
             deliveryTime: "20~30분"
         ),
-        HomeStoreInfoModel(
+        HomeRecentOrderModel(
             image: UIImage(named: "img_bbq"),
             storeName: "BBQ치킨",
             rating: 4.9,
             reviewCount: 842,
             deliveryTime: "30~40분"
         ),
-        HomeStoreInfoModel(
+        HomeRecentOrderModel(
             image: UIImage(named: "img_bondosirak"),
             storeName: "본도시락",
             rating: 4.8,
             reviewCount: 1912,
             deliveryTime: "20~30분"
         ),
-        HomeStoreInfoModel(
+        HomeRecentOrderModel(
             image: UIImage(named: "img_hongchuncheon"),
             storeName: "홍춘천치즈닭갈비",
             rating: 4.7,
             reviewCount: 724,
             deliveryTime: "30~40분"
         ),
-        HomeStoreInfoModel(
+        HomeRecentOrderModel(
             image: UIImage(named: "img_domino"),
             storeName: "도미노피자",
             rating: 4.9,
@@ -209,7 +209,7 @@ extension HomeSection {
             .mart(HomeMartModel.sampleData),
             .category(HomeCategoryModel.sampleData),
             .orderInfo(HomeOrderInfoModel.sampleData),
-            .storeInfo(HomeStoreInfoModel.sampleData),
+            .storeInfo(HomeRecentOrderModel.sampleData),
             .discountStore(HomeDiscountStoreModel.sampleData)
         ]
     }

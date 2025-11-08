@@ -35,7 +35,7 @@ final class HomeViewController: BaseViewController {
     }
     
     private func setupCollectionViews() {
-        // ✅ 카테고리 뷰
+        // 카테고리 뷰
         let categoryCollectionView = homeView.categoryView.collectionView
         categoryCollectionView.dataSource = self
         categoryCollectionView.register(
@@ -43,7 +43,7 @@ final class HomeViewController: BaseViewController {
             forCellWithReuseIdentifier: HomeCategoryCell.reuseIdentifier
         )
         
-        // ✅ 마트 뷰
+        // 마트 뷰
         let martCollectionView = homeView.martView.collectionView
         martCollectionView.dataSource = self
         martCollectionView.register(
@@ -51,7 +51,7 @@ final class HomeViewController: BaseViewController {
             forCellWithReuseIdentifier: HomeCategoryCell.reuseIdentifier
         )
         
-        // ✅ 우리 동네 랭킹 뷰
+        // 우리 동네 랭킹 뷰
         let rankingCollectionView = homeView.localRankingView.collectionView
         rankingCollectionView.dataSource = self
         rankingCollectionView.register(
@@ -59,7 +59,7 @@ final class HomeViewController: BaseViewController {
             forCellWithReuseIdentifier: HomeOrderInfoCell.reuseIdentifier
         )
         
-        // ✅ 최근 주문 뷰
+        // 최근 주문 뷰
         let recentOrderCollectionView = homeView.recentOrderView.collectionView
         recentOrderCollectionView.dataSource = self
         recentOrderCollectionView.register(
@@ -67,7 +67,7 @@ final class HomeViewController: BaseViewController {
             forCellWithReuseIdentifier: HomeStoreInfoCell.reuseIdentifier
         )
         
-        // ✅ 할인 가게 뷰
+        // 할인 가게 뷰
         let discountStoreCollectionView = homeView.discountStoreView.collectionView
         discountStoreCollectionView.dataSource = self
         discountStoreCollectionView.register(
@@ -111,7 +111,7 @@ extension HomeViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch collectionView {
             
-        // ✅ 카테고리 섹션
+        // 카테고리 섹션
         case homeView.categoryView.collectionView:
             guard let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: HomeCategoryCell.reuseIdentifier,
@@ -124,7 +124,7 @@ extension HomeViewController: UICollectionViewDataSource {
             }
             return cell
             
-        // ✅ 마트
+        // 마트
         case homeView.martView.collectionView:
             guard let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: HomeCategoryCell.reuseIdentifier,
@@ -137,7 +137,7 @@ extension HomeViewController: UICollectionViewDataSource {
             }
             return cell
             
-        // ✅ 우리 동네 랭킹
+        // 우리 동네 랭킹
         case homeView.localRankingView.collectionView:
             guard let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: HomeOrderInfoCell.reuseIdentifier,
@@ -150,7 +150,7 @@ extension HomeViewController: UICollectionViewDataSource {
             }
             return cell
             
-        // ✅ 최근 주문
+        // 최근 주문
         case homeView.recentOrderView.collectionView:
             guard let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: HomeStoreInfoCell.reuseIdentifier,
@@ -159,11 +159,11 @@ extension HomeViewController: UICollectionViewDataSource {
             
             if case let .storeInfo(models) = sections.first(where: { if case .storeInfo = $0 { return true } else { return false } })! {
                 let model = models[indexPath.item]
-                cell.configure(model, type: .recentOrder)
+                cell.configure(model)
             }
             return cell
             
-        // ✅ 할인 가게
+        // 할인 가게
         case homeView.discountStoreView.collectionView:
             guard let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: HomeStoreInfoCell.reuseIdentifier,
@@ -172,7 +172,7 @@ extension HomeViewController: UICollectionViewDataSource {
             
             if case let .discountStore(models) = sections.first(where: { if case .discountStore = $0 { return true } else { return false } })! {
                 let model = models[indexPath.item]
-                cell.configure(model, type: .discountStore)
+                cell.configure(model)
             }
             return cell
             

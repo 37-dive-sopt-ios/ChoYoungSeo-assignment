@@ -9,11 +9,6 @@ import UIKit
 import SnapKit
 import Then
 
-enum StoreInfoType {
-    case recentOrder
-    case discountStore
-}
-
 final class HomeStoreInfoCell: BaseUICollectionViewCell, ReuseIdentifiable {
     
     // MARK: - UI Components
@@ -175,6 +170,12 @@ final class HomeStoreInfoCell: BaseUICollectionViewCell, ReuseIdentifiable {
         $0.spacing = 7
     }
     
+    private let bodyStackView = UIStackView().then {
+        $0.axis = .vertical
+        $0.alignment = .leading
+        $0.spacing = 9
+    }
+    
     // MARK: - Setup Methods
     
     override func setUI() {
@@ -186,12 +187,13 @@ final class HomeStoreInfoCell: BaseUICollectionViewCell, ReuseIdentifiable {
         deliveryStackView.addArrangedSubviews(deliveryTimeStackView, freeDeliveryStackView)
         baeminClubStackView.addArrangedSubviews(baeminClubImageView, baeminClubLabel)
         chipStackView.addArrangedSubviews(baeminClubContainerView, pickupAvailableContainerView)
-        contentStackView.addArrangedSubviews(storeInfoStackView, deliveryStackView,chipStackView)
+        contentStackView.addArrangedSubviews(storeInfoStackView, deliveryStackView, chipStackView)
+        bodyStackView.addArrangedSubviews(recentOrderStackView, contentStackView)
         
         baeminClubContainerView.addSubview(baeminClubStackView)
         pickupAvailableContainerView.addSubview(pickupAvailableLabel)
         
-        contentView.addSubviews(orderInfoImageView, recentOrderStackView, contentStackView)
+        contentView.addSubviews(orderInfoImageView, bodyStackView)
     }
     
     override func setLayout() {
@@ -200,14 +202,9 @@ final class HomeStoreInfoCell: BaseUICollectionViewCell, ReuseIdentifiable {
             $0.size.equalTo(CGSize(width: 188, height: 126))
         }
         
-        recentOrderStackView.snp.makeConstraints {
+        bodyStackView.snp.makeConstraints {
             $0.top.equalTo(orderInfoImageView.snp.bottom).offset(12)
             $0.leading.equalToSuperview()
-        }
-        
-        contentStackView.snp.makeConstraints {
-            $0.top.equalTo(recentOrderStackView.snp.bottom).offset(9)
-            $0.horizontalEdges.equalToSuperview()
         }
         
         baeminClubStackView.snp.makeConstraints {
@@ -253,49 +250,21 @@ final class HomeStoreInfoCell: BaseUICollectionViewCell, ReuseIdentifiable {
 // MARK: - Configure
 
 extension HomeStoreInfoCell {
-    func configure(_ model: HomeStoreInfoModel, type: StoreInfoType) {
+    func configure(_ model: HomeRecentOrderModel) {
         orderInfoImageView.image = model.image
         storeNameLabel.text = model.storeName
         ratingLabel.text = String(format: "%.1f", model.rating)
-        reviewCountLabel.text = "(\(formatNumber(model.reviewCount)))"
+        reviewCountLabel.text = "(\(NumberFormatter.formatNumber(model.reviewCount)))"
         deliveryTimeLabel.text = model.deliveryTime
-
-        switch type {
-        case .recentOrder:
-            recentOrderStackView.snp.makeConstraints {
-                $0.size.equalTo(0)
-            }
-        case .discountStore:
-            recentOrderStackView.snp.makeConstraints {
-                $0.size.equalTo(0)
-            }
-        }
     }
-    
-    func configure(_ model: HomeDiscountStoreModel, type: StoreInfoType) {
+
+    func configure(_ model: HomeDiscountStoreModel) {
         orderInfoImageView.image = model.image
         storeNameLabel.text = model.storeName
         ratingLabel.text = String(format: "%.1f", model.rating)
-        reviewCountLabel.text = "(\(formatNumber(model.reviewCount)))"
+        reviewCountLabel.text = "(\(NumberFormatter.formatNumber(model.reviewCount)))"
         deliveryTimeLabel.text = model.deliveryTime
 
-        switch type {
-        case .recentOrder:
-            recentOrderStackView.snp.makeConstraints {
-                $0.size.equalTo(0)
-            }
-        case .discountStore:
-            recentOrderStackView.snp.makeConstraints {
-                $0.size.equalTo(0)
-            }
-        }
-    }
-    
-    private func formatNumber(_ value: Int) -> String {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        return formatter.string(from: NSNumber(value: value)) ?? "\(value)"
+        recentOrderStackView.isHidden = true
     }
 }
-
-
