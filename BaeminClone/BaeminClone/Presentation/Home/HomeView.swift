@@ -34,7 +34,7 @@ final class HomeView: BaseUIView {
         layer.endPoint = CGPoint(x: 0.5, y: 0.0)
         return layer
     }()
-    
+
     private let locationLabel = UILabel().then {
         $0.text = "우리집"
         $0.font = .pretendard(.head_b_16)
@@ -127,9 +127,7 @@ final class HomeView: BaseUIView {
         
         locationStackView.addArrangedSubviews(locationLabel, locationToggleImageView)
         topButtonStackView.addArrangedSubviews(discountButton, alarmButton, cartButton)
-    }
-    
-    override func setLayout() {
+        
         addSubview(scrollView)
         scrollView.addSubview(contentView)
         foodDeliveryArrowContainerView.addSubview(foodDeliveryArrowLabelView)
@@ -154,6 +152,9 @@ final class HomeView: BaseUIView {
             discountStoreView,
             foodDeliveryArrowContainerView
         )
+    }
+    
+    override func setLayout() {
         
         scrollView.snp.makeConstraints {
             $0.edges.equalToSuperview()
@@ -216,7 +217,7 @@ final class HomeView: BaseUIView {
         categoryView.snp.makeConstraints {
             $0.top.equalTo(gradientContainerView.snp.bottom)
             $0.horizontalEdges.equalToSuperview()
-            $0.height.equalTo(201)
+            $0.height.equalTo(250)
         }
         
         foodDeliveryArrowContainerView.snp.makeConstraints {
