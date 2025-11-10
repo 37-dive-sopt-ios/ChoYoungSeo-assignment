@@ -69,6 +69,7 @@ final class LoginView: BaseUIView {
     // MARK: - Setup Methods
     
     override func setUI() {
+        
         loginButton.configure(
             title: "로그인",
             style: .dynamic,
@@ -76,10 +77,9 @@ final class LoginView: BaseUIView {
                 self?.onLoginTapped?()
             }
         )
+        
         findAccountArrowLabelView.configure(text: "계정 찾기")
-    }
-    
-    override func setLayout() {
+        
         addSubviews(
             navigationBar,
             idTextField,
@@ -90,6 +90,9 @@ final class LoginView: BaseUIView {
             loginButton,
             findAccountArrowLabelView
         )
+    }
+    
+    override func setLayout() {
         
         navigationBar.snp.makeConstraints {
             $0.top.equalTo(safeAreaLayoutGuide)

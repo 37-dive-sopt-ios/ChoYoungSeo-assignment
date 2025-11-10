@@ -39,10 +39,9 @@ final class WelcomeView: BaseUIView {
     // MARK: - Setup Methods
     
     override func setUI() {
+        
         backgroundColor = .white
-    }
-    
-    override func setLayout() {
+        
         addSubviews(
             navigationBar,
             welcomeImageView,
@@ -50,6 +49,9 @@ final class WelcomeView: BaseUIView {
             subtitleLabel,
             loginButton
         )
+    }
+    
+    override func setLayout() {
         
         navigationBar.snp.makeConstraints {
             $0.top.equalTo(safeAreaLayoutGuide)

@@ -71,11 +71,10 @@ final class DiscountStoreView: BaseUIView {
     // MARK: - Setup Methods
     
     override func setUI() {
+        
         backgroundColor = .white
+        
         titleStackView.addArrangedSubviews(titleLabel, infoImageView)
-    }
-    
-    override func setLayout() {
         discountStoreContainerView.addSubview(discountStoreArrowLabelView)
         
         addSubviews(
@@ -85,6 +84,9 @@ final class DiscountStoreView: BaseUIView {
             discountStoreContainerView,
             collectionView
         )
+    }
+    
+    override func setLayout() {
         
         titleStackView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(27.5)

@@ -51,13 +51,15 @@ final class RecentOrderView: BaseUIView {
     // MARK: - Setup Methods
     
     override func setUI() {
+        
         backgroundColor = .white
+        
         titleStackView.addArrangedSubviews(titleLabel, infoImageView)
+        
+        addSubviews(titleStackView, allItemsArrowLabelView, collectionView)
     }
     
     override func setLayout() {
-        
-        addSubviews(titleStackView, allItemsArrowLabelView, collectionView)
         
         titleStackView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(24)
