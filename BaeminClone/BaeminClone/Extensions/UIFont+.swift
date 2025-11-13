@@ -16,6 +16,7 @@ extension UIFont {
         case head_b_13
         case title_sb_18
         case title_sb_10
+        case body_r_10
         case body_r_12
         case body_r_13
         case body_r_14
@@ -44,6 +45,8 @@ extension UIFont {
             return UIFont(name: "Pretendard-Regular", size: 13) ?? .systemFont(ofSize: 13, weight: .regular)
         case .body_r_12:
             return UIFont(name: "Pretendard-Regular", size: 12) ?? .systemFont(ofSize: 12, weight: .regular)
+        case .body_r_10:
+            return UIFont(name: "Pretendard-Regular", size: 10) ?? .systemFont(ofSize: 10, weight: .regular)
         case .caption_r_10:
             return UIFont(name: "Pretendard-Regular", size: 10) ?? .systemFont(ofSize: 10, weight: .regular)
         }
