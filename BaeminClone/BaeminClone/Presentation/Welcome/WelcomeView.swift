@@ -34,7 +34,7 @@ final class WelcomeView: BaseUIView {
         $0.numberOfLines = 0
     }
 
-    let loginButton = CTAButton()
+    let goToHomeButton = CTAButton()
     
     // MARK: - Setup Methods
     
@@ -47,7 +47,7 @@ final class WelcomeView: BaseUIView {
             welcomeImageView,
             titleLabel,
             subtitleLabel,
-            loginButton
+            goToHomeButton
         )
     }
     
@@ -75,7 +75,7 @@ final class WelcomeView: BaseUIView {
             $0.centerX.equalToSuperview()
         }
         
-        loginButton.snp.makeConstraints {
+        goToHomeButton.snp.makeConstraints {
             $0.bottom.equalTo(safeAreaLayoutGuide).inset(48)
             $0.centerX.equalToSuperview()
             $0.height.equalTo(52)

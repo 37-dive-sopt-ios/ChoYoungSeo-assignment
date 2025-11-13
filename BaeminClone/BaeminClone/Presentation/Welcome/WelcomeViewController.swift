@@ -24,8 +24,8 @@ final class WelcomeViewController: BaseViewController {
             self?.navigationController?.popViewController(animated: true)
         }
         
-        welcomeView.loginButton.configure(
-            title: "뒤로가기",
+        welcomeView.goToHomeButton.configure(
+            title: "메인으로 가기",
             style: .fixed,
             tapAction: { [weak self] in
                 self?.backToLoginButtonTapped()
@@ -48,6 +48,10 @@ final class WelcomeViewController: BaseViewController {
     // MARK: - Actions
     
     private func backToLoginButtonTapped() {
-        navigationController?.popViewController(animated: true)
+        guard let sceneDelegate = UIApplication.shared.connectedScenes
+            .first?.delegate as? SceneDelegate else { return }
+        
+        let tabBarVC = TabBarViewController()
+        sceneDelegate.changeRootViewController(tabBarVC)
     }
 }
