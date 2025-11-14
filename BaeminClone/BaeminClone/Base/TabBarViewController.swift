@@ -31,7 +31,7 @@ final class TabBarViewController: UIViewController {
         $0.alignment = .center
         $0.distribution = .equalSpacing
     }
-
+    
     private let homeStackView = UIStackView().then {
         $0.axis = .vertical
         $0.alignment = .center
@@ -39,8 +39,7 @@ final class TabBarViewController: UIViewController {
     }
     
     let homeButton = UIButton(type: .custom).then {
-        $0.setImage(UIImage(named: "ic_home")?.withRenderingMode(.alwaysTemplate), for: .normal)
-        $0.tintColor = .baeminBlack
+        $0.setImage(UIImage(named: "ic_home"), for: .normal)
     }
     
     private let homeLabel = UILabel().then {
@@ -55,10 +54,9 @@ final class TabBarViewController: UIViewController {
         $0.alignment = .center
         $0.spacing = 5
     }
-
-     let shoppingButton = UIButton(type: .custom).then {
-        $0.setImage(UIImage(named: "ic_shopping")?.withRenderingMode(.alwaysTemplate), for: .normal)
-        $0.tintColor = .baeminGray700
+    
+    let shoppingButton = UIButton(type: .custom).then {
+        $0.setImage(UIImage(named: "ic_shopping"), for: .normal)
     }
     
     private let shoppingLabel = UILabel().then {
@@ -75,8 +73,7 @@ final class TabBarViewController: UIViewController {
     }
     
     let favoriteButton = UIButton(type: .custom).then {
-        $0.setImage(UIImage(named: "ic_heart")?.withRenderingMode(.alwaysTemplate), for: .normal)
-        $0.tintColor = .baeminGray700
+        $0.setImage(UIImage(named: "ic_heart"), for: .normal)
     }
     
     private let favoriteLabel = UILabel().then {
@@ -93,8 +90,7 @@ final class TabBarViewController: UIViewController {
     }
     
     let orderHistoryButton = UIButton(type: .custom).then {
-        $0.setImage(UIImage(named: "ic_order")?.withRenderingMode(.alwaysTemplate), for: .normal)
-        $0.tintColor = .baeminGray700
+        $0.setImage(UIImage(named: "ic_order"), for: .normal)
     }
     
     private let orderHistoryLabel = UILabel().then {
@@ -111,8 +107,7 @@ final class TabBarViewController: UIViewController {
     }
     
     let myBaeminButton = UIButton(type: .custom).then {
-        $0.setImage(UIImage(named: "ic_face")?.withRenderingMode(.alwaysTemplate), for: .normal)
-        $0.tintColor = .baeminGray700
+        $0.setImage(UIImage(named: "ic_face"), for: .normal)
     }
     
     private let myBaeminLabel = UILabel().then {
@@ -123,7 +118,7 @@ final class TabBarViewController: UIViewController {
     }
     
     // MARK: - Lifecycle
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -132,7 +127,7 @@ final class TabBarViewController: UIViewController {
         setupActions()
         switchToTab(index: 0)
     }
-
+    
     // MARK: - Setup Methods
     
     func setUI() {
@@ -163,7 +158,7 @@ final class TabBarViewController: UIViewController {
         
         tabBarStackView.snp.makeConstraints {
             $0.horizontalEdges.equalToSuperview().inset(16)
-            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(6)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide)
             $0.height.equalTo(60)
         }
         
@@ -191,26 +186,28 @@ final class TabBarViewController: UIViewController {
     // MARK: - Private Methods
     
     private func switchToTab(index: Int) {
-        // 이전 화면 제거
+
         currentViewController?.willMove(toParent: nil)
         currentViewController?.view.removeFromSuperview()
         currentViewController?.removeFromParent()
         
-        // 새로운 화면 추가
         let newVC = viewControllers[index]
         addChild(newVC)
         contentView.addSubview(newVC.view)
-        newVC.view.frame = contentView.bounds
+        newVC.view.snp.makeConstraints { $0.edges.equalToSuperview() }
         newVC.didMove(toParent: self)
         currentViewController = newVC
         
-        // 탭 색상 업데이트
         let buttons = [homeButton, shoppingButton, favoriteButton, orderHistoryButton, myBaeminButton]
         let labels = [homeLabel, shoppingLabel, favoriteLabel, orderHistoryLabel, myBaeminLabel]
         
+        let normalIcons = ["ic_home", "ic_shopping", "ic_heart", "ic_order", "ic_face"]
+        let fillIcons = ["ic_home_fill", "ic_shopping_fill", "ic_heart_fill", "ic_order_fill", "ic_face_fill"]
+        
         for (i, button) in buttons.enumerated() {
             let isSelected = (i == index)
-            button.tintColor = isSelected ? .baeminBlack : .baeminGray700
+            let iconName = isSelected ? fillIcons[i] : normalIcons[i]
+            button.setImage(UIImage(named: iconName), for: .normal)
             labels[i].textColor = isSelected ? .baeminBlack : .baeminGray700
         }
     }
