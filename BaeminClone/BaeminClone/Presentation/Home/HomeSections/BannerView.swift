@@ -24,6 +24,13 @@ final class BannerView: BaseUIView {
         $0.isDirectionalLockEnabled = true
     }
     
+    private let bannerStackView = UIStackView().then {
+        $0.axis = .horizontal
+        $0.alignment = .fill
+        $0.distribution = .fillEqually
+        $0.spacing = 0
+    }
+    
     private let pageControl = UIPageControl().then {
         $0.currentPageIndicatorTintColor = .baeminBlack
         $0.pageIndicatorTintColor = .baeminGray300
@@ -33,13 +40,18 @@ final class BannerView: BaseUIView {
     
     override func setUI() {
         addSubviews(scrollView, pageControl)
+        scrollView.addSubview(bannerStackView)
         setupBanners()
         scrollView.delegate = self
     }
     
     override func setLayout() {
-        scrollView.snp.makeConstraints {
-            $0.edges.equalToSuperview() 
+        scrollView.snp.makeConstraints { $0.edges.equalToSuperview() }
+        
+        bannerStackView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+            $0.height.equalTo(114)
+            $0.width.equalTo(scrollView.snp.width).multipliedBy(bannerImages.count)
         }
         
         pageControl.snp.makeConstraints {
@@ -50,31 +62,13 @@ final class BannerView: BaseUIView {
     
     private func setupBanners() {
         pageControl.numberOfPages = bannerImages.count
-        
-        var previousView: UIView?
-        for imageName in bannerImages {
+        bannerImages.forEach { imageName in
             let imageView = UIImageView().then {
                 $0.image = UIImage(named: imageName)
                 $0.contentMode = .scaleAspectFill
                 $0.clipsToBounds = true
             }
-            
-            scrollView.addSubview(imageView)
-            imageView.snp.makeConstraints {
-                $0.height.equalTo(114)
-                $0.width.equalTo(self.snp.width)
-                
-                if let prev = previousView {
-                    $0.leading.equalTo(prev.snp.trailing)
-                } else {
-                    $0.leading.equalToSuperview()
-                }
-            }
-            previousView = imageView
-        }
-        
-        previousView?.snp.makeConstraints {
-            $0.trailing.equalToSuperview()
+            bannerStackView.addArrangedSubview(imageView)
         }
     }
 }
