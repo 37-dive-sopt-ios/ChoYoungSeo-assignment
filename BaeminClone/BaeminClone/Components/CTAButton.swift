@@ -14,8 +14,8 @@ final class CTAButton: UIView {
     // MARK: - Enum
     
     enum Style {
-        case dynamic   // 활성화 여부에 따라 색상 변경
-        case fixed     // 항상 활성화된 민트색 버튼
+        case dynamic
+        case fixed
     }
     
     // MARK: - Properties
