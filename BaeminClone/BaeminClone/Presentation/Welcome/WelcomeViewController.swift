@@ -28,7 +28,7 @@ final class WelcomeViewController: BaseViewController {
             title: "메인으로 가기",
             style: .fixed,
             tapAction: { [weak self] in
-                self?.backToLoginButtonTapped()
+                self?.goToHomeTapped()
             }
         )
         
@@ -47,7 +47,7 @@ final class WelcomeViewController: BaseViewController {
     
     // MARK: - Actions
     
-    private func backToLoginButtonTapped() {
+    private func goToHomeTapped() {
         guard let sceneDelegate = UIApplication.shared.connectedScenes
             .first?.delegate as? SceneDelegate else { return }
         
